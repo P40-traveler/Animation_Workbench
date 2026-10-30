@@ -1,9 +1,13 @@
-# 帧间工作台协作
+# 项目协作约定
 
-修改前阅读ANIMATION_WORKBENCH_DESIGN.md、docs/API_CONTRACT.md、docs/VALIDATION.md。
-当前用户已确认完整方案并授权实现，按文档落实，不重复要求确认普通实现选择。
-UI和Codex使用同一HTTP接口；不能绕过修订检查或直接写用户SQLite。
-保护data与原图，测试用独立AW_DATA_DIR；原图只读，修改生成派生素材。
-前端React/TypeScript/Canvas，后端FastAPI/Pillow/SQLite。保持localhost运行。
-验证 .venv/Scripts/python -m pytest tests -q 和 frontend/npm run build；实际行为变化增加必要的测试。
-报告已验证范围与未验证项；动画动作合理性由用户预览验收。
+- 本项目从零建立，不读取或沿用旧工程代码。
+- 用户指定前端、后端由不同子 agent 实现，模型为 `gpt-6-astra`，reasoning effort 为 `medium`。
+- 根目录 `前端设计风格.txt` 只允许负责前端的子 agent 阅读。协调 agent、后端及审阅 agent 不读其内容，前端也不要把原文复制到其他共享文件或消息。
+- 不读取、打印、复制或提交 `ds-api.txt` 等密钥文件。需要真实模型接入时通过明确的服务配置设计处理，不把聊天产品能力当成本地 API。
+- 修改前阅读 `docs/design.md` 和 `docs/api-contract.md`。接口变更先同步前后端，再实现。
+- 前端主要修改 `frontend/`，后端主要修改 `backend/`，协调者维护根脚本、文档及跨端验收。
+- 测试素材必须标注为程序测试素材，不能称为 AI 生成结果。
+- 默认服务地址为 `http://127.0.0.1:18765`。本机原先尝试的 8765 端口不可用。
+- 使用项目 `.venv/Scripts/python.exe` 运行后端和测试。启动器负责创建、安装和检查环境，不依赖终端中裸 `python` 的 PATH 顺序。启动回归需验证普通 Windows Machine+User PATH，不能只在 Codex/Conda 环境中验证。
+- 验收使用临时目录或明确命名的验收项目，不修改用户正式资产。检查命令见 README 和 docs/verification.md。
+- 保存、采用候选、人工验收必须保持不同含义。不得用最后写入覆盖解决版本冲突。
